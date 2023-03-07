@@ -56,19 +56,16 @@ const collect = async prefix => {
   return { p: zp }
 }
 
-  ;
 
-(async () => {
-  await mkdir('zip').catch(mkdirCatch)
+await mkdir('zip').catch(mkdirCatch)
 
-  const years = [2022]
-  const months = [1, 2, 3, 4, 5, 6, 7]
-  const prefixes = years.flatMap(year => months.map(month => `${year}-${month}`))
-  const zps = []
-  for (const prefix of prefixes) {
-    zps.push((await collect(prefix)).p)
-  }
+const years = [2022]
+const months = [1, 2, 3, 4, 5, 6, 7]
+const prefixes = years.flatMap(year => months.map(month => `${year}-${month}`))
+const zps = []
+for (const prefix of prefixes) {
+  zps.push((await collect(prefix)).p)
+}
 
-  await Promise.all(zps)
-  console.log('All done')
-})()
+await Promise.all(zps)
+console.log('All done')
