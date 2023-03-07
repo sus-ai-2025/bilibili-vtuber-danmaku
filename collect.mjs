@@ -59,9 +59,13 @@ const collect = async prefix => {
 
 await mkdir('zip').catch(mkdirCatch)
 
-const years = [2022]
-const months = [1, 2, 3, 4, 5, 6, 7]
-const prefixes = years.flatMap(year => months.map(month => `${year}-${month}`))
+const prefixes = Array(12)
+  .fill([new Date().getFullYear(), new Date().getMonth()])
+  .map(([year, month], i) => [year, month - i])
+  .map(([year, month]) => month <= 0 ? [year - 1, month + 12] : [year, month])
+  .map(w => w.join('-'))
+  .reverse()
+
 const zps = []
 for (const prefix of prefixes) {
   zps.push((await collect(prefix)).p)
